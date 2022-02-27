@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.tegarpenemuan.latihanroomdatabase.room.Note
+import kotlinx.android.synthetic.main.adapter_note.view.*
 
-class NoteAdapter(private val notes: ArrayList<Note>) :
+class NoteAdapter(private val notes: ArrayList<Note>, private val listener:OnAdapterListener) :
     RecyclerView.Adapter<NoteAdapter.NoteViewHolder>() {
-    class NoteViewHolder(view: View) : RecyclerView.ViewHolder(view)
+    class NoteViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         return NoteViewHolder(
@@ -18,6 +19,10 @@ class NoteAdapter(private val notes: ArrayList<Note>) :
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
         val note = notes[position]
+        holder.view.text_title.text = note.title
+        holder.view.text_title.setOnClickListener {
+            listener.onClick(note)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -28,5 +33,9 @@ class NoteAdapter(private val notes: ArrayList<Note>) :
         notes.clear()
         notes.addAll(list)
         notifyDataSetChanged()
+    }
+
+    interface OnAdapterListener {
+        fun onClick(note: Note)
     }
 }
