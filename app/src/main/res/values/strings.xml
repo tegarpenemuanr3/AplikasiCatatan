@@ -1,4 +1,4 @@
 <resources>
-    <string name="app_name">LatihanRoomDatabase</string>
+    <string name="app_name">Aplikasi Catatan</string>
     <string name="tulis_catatan">Tulis Catatan</string>
 </resources>

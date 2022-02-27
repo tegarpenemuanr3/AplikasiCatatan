@@ -53,14 +53,17 @@ class EditActivity : AppCompatActivity() {
         val intentType = intent.getIntExtra("intent_type", 0)
         when (intentType) {
             Constant.TYPE_CREATE -> {
+                supportActionBar!!.title = "Halaman Tambah"
                 button_update.visibility = View.GONE
             }
             Constant.TYPE_READ -> {
+                supportActionBar!!.title = "Halaman Tampil"
                 button_save.visibility = View.GONE
                 button_update.visibility = View.GONE
                 getnote()
             }
             Constant.TYPE_UPDATE -> {
+                supportActionBar!!.title = "Halaman Update"
                 button_save.visibility = View.GONE
                 getnote()
             }
