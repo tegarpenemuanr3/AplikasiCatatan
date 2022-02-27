@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 class EditActivity : AppCompatActivity() {
 
     val db by lazy { NoteDB(this) }
-    private var noteId:Int = 0
+    private var noteId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +29,7 @@ class EditActivity : AppCompatActivity() {
         button_save.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 db.noteDao().addNote(
-                    Note(0,edit_title.text.toString(),edit_note.text.toString())
+                    Note(0, edit_title.text.toString(), edit_note.text.toString())
                 )
                 finish()
             }
@@ -37,8 +37,9 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun setupView() {
-        val intentType = intent.getIntExtra("intent_type",0)
-        when(intentType) {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        val intentType = intent.getIntExtra("intent_type", 0)
+        when (intentType) {
             Constant.TYPE_CREATE -> {
 
             }
@@ -50,11 +51,16 @@ class EditActivity : AppCompatActivity() {
     }
 
     fun getnote() {
-        noteId = intent.getIntExtra("intent_id",0)
+        noteId = intent.getIntExtra("intent_id", 0)
         CoroutineScope(Dispatchers.IO).launch {
             val notes = db.noteDao().getNote(noteId)[0]
             edit_title.setText(notes.title)
             edit_note.setText(notes.note)
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return super.onSupportNavigateUp()
     }
 }
