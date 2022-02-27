@@ -37,6 +37,16 @@ class MainActivity : AppCompatActivity() {
 //                )
                 intentEdit(note.id,Constant.TYPE_READ)
             }
+            override fun onUpdate(note: Note) {
+                intentEdit(note.id,Constant.TYPE_UPDATE)
+            }
+            override fun onDelete(note: Note) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.noteDao().deleteNote(note)
+                    loadNote()
+                }
+                Toast.makeText(applicationContext,"Data Berhasil Dihapus",Toast.LENGTH_SHORT).show()
+            }
 
         })
         list_note.apply {
@@ -47,6 +57,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        loadNote()
+    }
+
+    private fun loadNote() {
         CoroutineScope(Dispatchers.IO).launch {
             val notes = db.noteDao().getNotes()
             Log.d("MainActivity","dbResponse: $notes")

@@ -33,6 +33,18 @@ class EditActivity : AppCompatActivity() {
                 )
                 finish()
             }
+            Toast.makeText(applicationContext, "Data Berhasil Ditambahkan", Toast.LENGTH_SHORT)
+                .show()
+        }
+        button_update.setOnClickListener {
+            CoroutineScope(Dispatchers.IO).launch {
+                db.noteDao().updateNote(
+                    Note(noteId, edit_title.text.toString(), edit_note.text.toString())
+                )
+                finish()
+            }
+            Toast.makeText(applicationContext, "Data Berhasil Diedit", Toast.LENGTH_SHORT)
+                .show()
         }
     }
 
@@ -41,9 +53,14 @@ class EditActivity : AppCompatActivity() {
         val intentType = intent.getIntExtra("intent_type", 0)
         when (intentType) {
             Constant.TYPE_CREATE -> {
-
+                button_update.visibility = View.GONE
             }
             Constant.TYPE_READ -> {
+                button_save.visibility = View.GONE
+                button_update.visibility = View.GONE
+                getnote()
+            }
+            Constant.TYPE_UPDATE -> {
                 button_save.visibility = View.GONE
                 getnote()
             }
