@@ -8,8 +8,13 @@ aplikasi ini adalah aplikasi CRUD sederhana dari penerapan Room Database.
 - Update Data
 
 ## Plans to add features
-- Saving Note 
-- application titles such as delete activities, update activities and data display activities.
+- Saving Note / history
 - Giving time
 
 > Languages used with kotlin and android studio used version 2021.1.1
+
+## Demo
+![Alt Text](https://github.com/tegarpenemuanr3/LatihanRoomDatabase/blob/af3433bf507ff9514aa56659f74e680d05289a36/app/src/main/res/drawable/demo.gif)
+
+## Thanks
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
