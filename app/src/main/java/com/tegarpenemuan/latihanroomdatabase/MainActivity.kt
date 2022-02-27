@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tegarpenemuan.latihanroomdatabase.room.Constant
 import com.tegarpenemuan.latihanroomdatabase.room.Note
@@ -41,11 +42,7 @@ class MainActivity : AppCompatActivity() {
                 intentEdit(note.id,Constant.TYPE_UPDATE)
             }
             override fun onDelete(note: Note) {
-                CoroutineScope(Dispatchers.IO).launch {
-                    db.noteDao().deleteNote(note)
-                    loadNote()
-                }
-                Toast.makeText(applicationContext,"Data Berhasil Dihapus",Toast.LENGTH_SHORT).show()
+                deleteDialog(note)
             }
 
         })
@@ -53,6 +50,26 @@ class MainActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = noteAdapter
         }
+    }
+
+    private fun deleteDialog(note: Note) {
+        val alertDialog = AlertDialog.Builder(this)
+        alertDialog.apply {
+            setTitle("Konfirmasi")
+            setMessage("Yakin hapus ${note.title}?")
+            setNegativeButton("Batal") { dialogInterface, i ->
+                dialogInterface.dismiss()
+            }
+            setPositiveButton("Hapus") { dialogInterface, i ->
+                dialogInterface.dismiss()
+                CoroutineScope(Dispatchers.IO).launch {
+                    db.noteDao().deleteNote(note)
+                    loadNote()
+                }
+                Toast.makeText(applicationContext,"Data Berhasil Dihapus",Toast.LENGTH_SHORT).show()
+            }
+        }
+        alertDialog.show()
     }
 
     override fun onStart() {
